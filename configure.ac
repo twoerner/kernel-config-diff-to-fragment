@@ -1,7 +1,7 @@
 dnl Copyright (C) 2023  Trevor Woerner <twoerner@gmail.com>
 
 dnl AC_PREREQ(2.57)
-AC_INIT([kernel config diff to fragment], 0.1.1, twoerner@gmail.com, kernel-config-diff-to-fragment)
+AC_INIT([kernel config diff to fragment], 1.0.0, twoerner@gmail.com, kernel-config-diff-to-fragment)
 AC_CONFIG_SRCDIR(src/kernel-config-diff-to-fragment.c)
 AC_CONFIG_AUX_DIR(cfg)
 AC_CONFIG_MACRO_DIRS([cfg])
