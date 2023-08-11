@@ -1,0 +1,19 @@
+kernel-config-diff-to-fragment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The kconfig system is able to work with kconfig fragments. A kconfig
+fragment is a file that contains a subset of a full kconfig file. A set of
+fragments can be merged with a base defconfig to produce a full kconfig.
+Fragments are usefull for adding or removing isolated functionality.
+
+Generating a fragment is usually done by hand, this tool helps to automate
+the process.
+
+Start with a current configuration, say in .config, save this to
+'beforeconfig'. Then run 'make menuconfig', tweak the configuration however
+you wish. When you're done save the resulting new config to 'afterconfig'.
+
+Generate a unified diff of the two configurations:
+	$ diff -u beforeconfig afterconfig > frag.diff
+
+Run 'frag.diff' through this tool to produce a kconfig fragment:
+	$ kernel-config-to-fragment frag.diff > frag.cfg
