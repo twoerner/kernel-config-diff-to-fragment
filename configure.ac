@@ -25,8 +25,8 @@ dnl **********************************
 dnl checks for header files
 dnl **********************************
 AC_HEADER_STDC
-AC_CHECK_HEADERS(stdio.h string.h)
-AC_CHECK_HEADERS(errno.h unistd.h)
+AC_CHECK_HEADERS(stdio.h string.h stdlib.h)
+AC_CHECK_HEADERS(errno.h unistd.h getopt.h)
 
 dnl **********************************
 dnl output

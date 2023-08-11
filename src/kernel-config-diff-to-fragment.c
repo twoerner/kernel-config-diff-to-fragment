@@ -4,8 +4,10 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <errno.h>
 #include <unistd.h>
+#include <getopt.h>
 
 static char *inputFileName_pG = NULL;
 static char buf[256];
@@ -56,13 +58,40 @@ main (int argc, char *argv[])
 static void
 usage(char *cmdline_p)
 {
-	printf("usage: %s <unified diff file>\n", cmdline_p);
+	printf("usage: %s [options] <unified diff file>\n", cmdline_p);
+	printf("options:\n");
+	printf("  -h|--help        Print this help and exit successfully.\n");
 }
 
 static int
 process_cmdline_args(int argc, char *argv[])
 {
-	if (argc != 2) {
+	int c;
+	struct option longOpts[] = {
+		{"help", no_argument, NULL, 'h'},
+		{NULL, 0, NULL, 0},
+	};
+
+	while (1) {
+		c = getopt_long(argc, argv, "h", longOpts, NULL);
+		if (c == -1)
+			break;
+		switch (c) {
+			case 'h':
+				usage(argv[0]);
+				exit(0);
+				break;
+
+			case '?':
+				exit(1);
+				break;
+
+			default:
+				break;
+		}
+	}
+
+	if ((optind + 1) != argc) {
 		printf("1 cmdline arg is required\n");
 		usage(argv[0]);
 		return -1;
