@@ -8,12 +8,14 @@
 #include <errno.h>
 #include <unistd.h>
 #include <getopt.h>
+#include "config.h"
 
 static char *inputFileName_pG = NULL;
 static char buf[256];
 
 static int process_cmdline_args (int argc, char *argv[]);
 static void usage (char *cmdline_p);
+static void version (void);
 
 int
 main (int argc, char *argv[])
@@ -56,11 +58,18 @@ main (int argc, char *argv[])
 }
 
 static void
+version(void)
+{
+	printf("%s v%s\n", PACKAGE, PACKAGE_VERSION);
+}
+
+static void
 usage(char *cmdline_p)
 {
 	printf("usage: %s [options] <unified diff file>\n", cmdline_p);
 	printf("options:\n");
 	printf("  -h|--help        Print this help and exit successfully.\n");
+	printf("  -v|--version     Print the package version and exit successfully.\n");
 }
 
 static int
@@ -69,16 +78,23 @@ process_cmdline_args(int argc, char *argv[])
 	int c;
 	struct option longOpts[] = {
 		{"help", no_argument, NULL, 'h'},
+		{"version", no_argument, NULL, 'v'},
 		{NULL, 0, NULL, 0},
 	};
 
 	while (1) {
-		c = getopt_long(argc, argv, "h", longOpts, NULL);
+		c = getopt_long(argc, argv, "hv", longOpts, NULL);
 		if (c == -1)
 			break;
 		switch (c) {
 			case 'h':
+				version();
 				usage(argv[0]);
+				exit(0);
+				break;
+
+			case 'v':
+				version();
 				exit(0);
 				break;
 
